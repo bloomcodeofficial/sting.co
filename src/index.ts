@@ -1,7 +1,3 @@
-import { greetUser } from '$utils/greet';
+import { navbar } from '$utils/navbar';
 
-window.Webflow ||= [];
-window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
-});
+navbar();
