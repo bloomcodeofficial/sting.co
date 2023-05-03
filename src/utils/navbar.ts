@@ -6,6 +6,7 @@ export const navbar = () => {
   const menuBtn = document.querySelector('.globalnav_hamburger');
   const mobNav = document.querySelector('.globalnav_mob-menu');
   const mobNavItem = document.querySelectorAll('.globalnav_mob-nav-item');
+  const curtain = document.querySelector('.globalnav_curtain');
 
   //// FUNCTIONS ////
 
@@ -13,12 +14,14 @@ export const navbar = () => {
   const closeSubmenus = function () {
     submenus.forEach((submenu) => submenu.classList.remove('globalnav_submenu--active'));
     links.forEach((link) => link.classList.remove('globalnav_link--active'));
+    curtain?.classList.remove('globalnav_curtain--active');
   };
 
   // Open specific submenu
   const openSubmenu = function (link, submenu) {
     link.classList.add('globalnav_link--active');
     submenu.classList.add('globalnav_submenu--active');
+    curtain?.classList.add('globalnav_curtain--active');
   };
 
   // Close all mob items to give space for clicked subnav link
