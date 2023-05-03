@@ -17,6 +17,7 @@ export const senja = function () {
       disableOnInteraction: true,
     },
   });
+
   const testimonialsList = document.querySelector('.swiper-wrapper.is-testimonials-1');
   fetch('https://api.senja.io/v1/testimonials?approved=true&type=text', {
     headers: {
