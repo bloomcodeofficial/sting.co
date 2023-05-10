@@ -1,7 +1,7 @@
 import { Navigation, Swiper } from 'swiper';
 
 export const speakers1 = function () {
-  const swiperSpeakers1 = new Swiper('.swiper.is-speakers-1', {
+  const swiperSpeakers1 = new Swiper('.swiper.is-team-1', {
     modules: [Navigation],
     slidesPerView: 3,
     spaceBetween: 32,
@@ -32,25 +32,27 @@ export const speakers1 = function () {
   const list = document.querySelectorAll('.is-speakers-1');
   const cards = document.querySelectorAll('.card-team-2');
 
-  // FUNCTIONS //
-  const activateCard = function (card) {
-    card.classList.add('card-team-2--active');
-  };
+  if (list.length > 0) {
+    // FUNCTIONS //
+    const activateCard = function (card) {
+      card.classList.add('card-team-2--active');
+    };
 
-  const deactivateCards = function () {
-    cards.forEach((card) => card.classList.remove('card-team-2--active'));
-  };
+    const deactivateCards = function () {
+      cards.forEach((card) => card.classList.remove('card-team-2--active'));
+    };
 
-  // EVENT HANDLERS //
-  list[0].addEventListener('mouseover', function (e) {
-    const hovered = e.target.closest('.card-team-2');
-    if (!hovered) return;
+    // EVENT HANDLERS //
+    list[0].addEventListener('mouseover', function (e) {
+      const hovered = e.target.closest('.card-team-2');
+      if (!hovered) return;
 
-    deactivateCards();
-    activateCard(hovered);
-  });
+      deactivateCards();
+      activateCard(hovered);
+    });
 
-  list[0].addEventListener('mouseout', function () {
-    deactivateCards();
-  });
+    list[0].addEventListener('mouseout', function () {
+      deactivateCards();
+    });
+  }
 };
