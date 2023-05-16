@@ -42,7 +42,7 @@ export const jobylon2 = () => {
 
           const filterTemplateElement3 = filterInstance.form.querySelector(
             '[data-element="location-filter"]'
-          );
+          ).parentElement;
 
           // Get parent of template elements
           const filter1WrapperElement = filterTemplateElement1?.parentElement;
@@ -57,8 +57,7 @@ export const jobylon2 = () => {
           // Collect unique categories of each category
           const newItems1 = collectCategories(fetchData, 'experience');
           const newItems2 = collectCategories(fetchData, 'function');
-
-          // Create new filters for each category and append them in the wrapper
+          const newItems3 = collectLocations(fetchData);
 
           // Create new filters for each category and append them in the parent wrapper
           for (const category of newItems1) {
@@ -73,6 +72,13 @@ export const jobylon2 = () => {
             if (!newFilter) continue;
 
             filter2WrapperElement?.append(newFilter);
+          }
+
+          for (const category of newItems3) {
+            const newFilter = createFiler(category, filterTemplateElement3);
+            if (!newFilter) continue;
+
+            filter3WrapperElement?.append(newFilter);
           }
 
           // Sync CMSFilters instance to read the new filters data
@@ -104,17 +110,37 @@ export const jobylon2 = () => {
     const logo = newItem.querySelector('[data-element="logo"]');
     const title = newItem.querySelector('[data-element="title"]');
     const company = newItem.querySelector('[data-element="company"]');
+    // const location = newItem.querySelector('[data-element="location"]');
     const location = newItem.querySelector('[data-element="location"]');
     const experience = newItem.querySelector('[data-element="level"]');
     const jobType = newItem.querySelector('[data-element="type"]');
     const jobFunction = newItem.querySelector('[data-element="job-function"]');
     const link = newItem.querySelector('[data-element="link"]');
 
+    const addLocations = () => {
+      const jobLocations = collectJobLocations(job);
+      const templ = location.parentElement;
+      const list = templ.parentElement;
+
+      templ.remove();
+
+      jobLocations.forEach((location) => {
+        const newLocation = templ.cloneNode(true);
+        const locationTxt = newLocation.querySelector('[data-element="location"]');
+
+        if (locationTxt) locationTxt.textContent = location;
+
+        list.append(newLocation);
+      });
+    };
+
+    addLocations();
+
     // Populate the internal items
     if (logo) logo.src = job.company.logo;
     if (title) title.textContent = job.title;
     if (company) company.textContent = job.company.name;
-    if (location) location.textContent = job.locations[0].location.city;
+    // if (location) location.textContent = job.locations[0].location.city;
     if (experience) experience.textContent = job.experience;
     if (jobType) jobType.textContent = job.employment_type;
     if (jobFunction) jobFunction.textContent = job.function;
@@ -131,6 +157,38 @@ export const jobylon2 = () => {
       categoryItems.add(job[category]);
     }
     return [...categoryItems];
+  };
+
+  const collectLocations = function (jobs) {
+    const locationItems = new Set();
+
+    jobs.forEach((job) => {
+      job.locations.forEach((jobLocations) => {
+        if (jobLocations.location.city) {
+          locationItems.add(jobLocations.location.city);
+          return;
+        }
+        if (!jobLocations.location.city && jobLocations.location.text) {
+          locationItems.add(jobLocations.location.text);
+          return;
+        }
+      });
+    });
+
+    return [...locationItems];
+  };
+
+  const collectJobLocations = function (job) {
+    const string = new Set();
+    job.locations.forEach((jobLocations) => {
+      if (jobLocations.location.city) {
+        string.add(jobLocations.location.city);
+      } else if (jobLocations.location.text) {
+        string.add(jobLocations.location.text);
+      }
+    });
+
+    return [...string];
   };
 
   // Creates a new checkbox filter from template and external data
