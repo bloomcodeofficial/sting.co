@@ -7,8 +7,17 @@ export const navbar = () => {
   const mobNav = document.querySelector('.globalnav_mob-menu');
   const mobNavItem = document.querySelectorAll('.globalnav_mob-nav-item');
   const curtain = document.querySelector('.globalnav_curtain');
+  const breadcrumbLinks = document.querySelectorAll('.globalnav-breadcrumbs_link-item');
 
   //// FUNCTIONS ////
+
+  // Remove "/" from the last breadcrumb item
+  const removeSlash = function (items) {
+    const lastEl = breadcrumbLinks.item(breadcrumbLinks.length - 1);
+    const slashSymbol = lastEl.querySelector('[data-element="breadcrumb-slash"]');
+
+    slashSymbol.style.display = 'none';
+  };
 
   // Close all submenus to give space for clicked submenu link
   const closeSubmenus = function () {
@@ -94,4 +103,6 @@ export const navbar = () => {
       openMobItem(item);
     } else closeMobItems();
   });
+
+  document.addEventListener('DOMContentLoaded', removeSlash.bind(breadcrumbLinks));
 };
