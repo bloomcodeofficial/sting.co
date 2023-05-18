@@ -8,11 +8,12 @@ export const navbar = () => {
   const mobNavItem = document.querySelectorAll('.globalnav_mob-nav-item');
   const curtain = document.querySelector('.globalnav_curtain');
   const breadcrumbLinks = document.querySelectorAll('.globalnav-breadcrumbs_link-item');
+  const breadcrumbs = document.querySelector('.globalnav-breadcrumbs_component');
 
   //// FUNCTIONS ////
 
   // Remove "/" from the last breadcrumb item
-  const removeSlash = function (items) {
+  const removeSlash = function () {
     const lastEl = breadcrumbLinks.item(breadcrumbLinks.length - 1);
     const slashSymbol = lastEl.querySelector('[data-element="breadcrumb-slash"]');
 
@@ -24,6 +25,7 @@ export const navbar = () => {
     submenus.forEach((submenu) => submenu.classList.remove('globalnav_submenu--active'));
     links.forEach((link) => link.classList.remove('globalnav_link--active'));
     curtain?.classList.remove('globalnav_curtain--active');
+    breadcrumbs?.classList.remove('globalnav-breadcrumbs_component--inactive');
   };
 
   // Open specific submenu
@@ -31,6 +33,7 @@ export const navbar = () => {
     link.classList.add('globalnav_link--active');
     submenu.classList.add('globalnav_submenu--active');
     curtain?.classList.add('globalnav_curtain--active');
+    breadcrumbs?.classList.add('globalnav-breadcrumbs_component--inactive');
   };
 
   // Close all mob items to give space for clicked subnav link
@@ -104,5 +107,5 @@ export const navbar = () => {
     } else closeMobItems();
   });
 
-  document.addEventListener('DOMContentLoaded', removeSlash.bind(breadcrumbLinks));
+  document.addEventListener('DOMContentLoaded', removeSlash);
 };
