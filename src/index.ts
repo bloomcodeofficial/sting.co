@@ -1,4 +1,5 @@
 import { faq1 } from '$utils/faq-1';
+import { filter } from '$utils/filter';
 import { jobylon2 } from '$utils/jobylon2';
 import { logoMarquee } from '$utils/logo-marquee';
 import { navbar } from '$utils/navbar';
@@ -14,6 +15,7 @@ prestingAcc();
 speakers1();
 videoJS();
 faq1();
+filter();
 
 if (window.location.pathname === '/companies-2/startup-jobs') {
   jobylon2();
