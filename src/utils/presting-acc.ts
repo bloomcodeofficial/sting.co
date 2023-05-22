@@ -16,7 +16,6 @@ export const prestingAcc = function () {
   };
 
   // EVENT HANDLERS //
-
   accContainers.forEach((container) => {
     container.addEventListener('click', function (e) {
       const container = e.target.closest('.presting-list_acc-container');

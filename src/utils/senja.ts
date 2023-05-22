@@ -1,42 +1,9 @@
-import 'swiper/css';
-
 import { removeChildElements } from '@finsweet/ts-utils';
-import { Autoplay, Swiper } from 'swiper';
 
 export const senja = function () {
-  const swiper1 = new Swiper('.swiper.is-testimonials-1', {
-    speed: 500,
-    // centeredSlides: true,
-    grabCursor: true,
-    slidesPerView: 3,
-    spaceBetween: 32,
-    // autoplay: {
-    //   delay: 4000,
-    //   pauseOnMouseEnter: true,
-    //   disableOnInteraction: true,
-    // },
-    breakpoints: {
-      // when window width is >= 320px
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20,
-      },
-      // when window width is >= 480px
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 32,
-      },
-      // when window width is >= 992px
-      992: {
-        slidesPerView: 3,
-        spaceBetween: 32,
-      },
-    },
-  });
-
   const getTestimonials = () => {
     // Get testimonials from Senja.io
-    const testimonialsList = document.querySelector('.swiper-wrapper.is-testimonials-1');
+    const testimonialsList = document.querySelector('.swiper-wrapper.is-main-slider');
     if (!testimonialsList) return;
     const { tags } = testimonialsList.dataset;
 

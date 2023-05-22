@@ -1,18 +1,16 @@
 import { faq1 } from '$utils/faq-1';
 import { filter } from '$utils/filter';
-import { jobylon2 } from '$utils/jobylon2';
-import { logoMarquee } from '$utils/logo-marquee';
+import { jobylon2 } from '$utils/jobylon';
 import { navbar } from '$utils/navbar';
 import { prestingAcc } from '$utils/presting-acc';
 import { senja } from '$utils/senja';
-import { speakers1 } from '$utils/speakers-1';
+import { globalSwiper } from '$utils/swiper-global';
 import { videoJS } from '$utils/videojs';
 
 navbar();
 senja();
-logoMarquee();
 prestingAcc();
-speakers1();
+globalSwiper();
 videoJS();
 faq1();
 filter();
