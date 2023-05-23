@@ -2,10 +2,18 @@ import { Navigation, Swiper } from 'swiper';
 
 export const globalSwiper = function () {
   // Get amt of slides for desktop
-  const slidersDesktop = document.querySelector('.swiper-wrapper')?.dataset.slidersperview;
   const swipers = document.querySelectorAll('.swiper.is-main-slider');
 
   swipers.forEach((swiper) => {
+    const swiperList = swiper.firstChild;
+    const slidersDesktop = swiperList?.dataset.slidersperview;
+
+    // if (!swiperList.querySelector('.swiper-slide.is-main-slider')) {
+    //   swiper.closest('[data-swiper="section"]')?.remove();
+    //   console.log(swiperList);
+    //   return;
+    // }
+
     const mainSwiperSlider = new Swiper(swiper, {
       modules: [Navigation],
       slidesPerView: 3,
