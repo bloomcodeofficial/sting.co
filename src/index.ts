@@ -1,6 +1,7 @@
 import { faq1 } from '$utils/faq-1';
 import { filter } from '$utils/filter';
 import { jobylon2 } from '$utils/jobylon';
+import { library } from '$utils/library';
 import { navbar } from '$utils/navbar';
 import { prestingAcc } from '$utils/presting-acc';
 import { senja } from '$utils/senja';
@@ -14,6 +15,7 @@ globalSwiper();
 videoJS();
 faq1();
 filter();
+library();
 
 if (window.location.pathname === '/companies-2/startup-jobs') {
   jobylon2();

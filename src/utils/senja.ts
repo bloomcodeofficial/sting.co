@@ -30,8 +30,8 @@ export const senja = function () {
         // Array of fetched items
         const newItems = data.testimonials;
 
-        // Remove section if no testimonials exist
-        if (newItems.length < 3) testimonialsList.closest('[data-element="section"]')?.remove();
+        // // Remove section if no testimonials exist
+        // if (newItems.length < 3) testimonialsList.closest('[data-element="section"]')?.remove();
 
         // Filter testimonials with less than 200 charachters of text
         const filteredItems = newItems.filter((item) => item.text.trim().length < 300);
