@@ -1,6 +1,12 @@
 import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar, Swiper } from 'swiper';
 
 export const globalSwiper = function () {
+  const checkListLength = function (list) {
+    if (list.classList.contains('w-dyn-empty')) {
+      console.log('Empty list!');
+    } else return;
+  };
+
   // Get amt of slides for desktop
   const swiperComponents = document.querySelectorAll('[element="swiper-component"]');
   const swipers = document.querySelectorAll('.swiper.is-main-slider');
@@ -10,8 +16,15 @@ export const globalSwiper = function () {
     const swiperList = swiper.firstChild;
     const slidersDesktop = swiperList?.dataset.slidersperview;
     const slidersGap = swiperList?.dataset.gappx;
+    const section = swiperComp.closest('section');
 
-    swiperComp.closest('section').style.overflow = 'hidden';
+    if (swiperList.classList.contains('w-dyn-empty')) {
+      console.log('Empty list!');
+      section?.remove();
+      return;
+    }
+
+    section.style.overflow = 'hidden';
     swiper?.classList.add('swiper--' + i);
 
     const mainSwiperSlider = new Swiper(`.swiper.is-main-slider.swiper--` + i, {
@@ -23,6 +36,8 @@ export const globalSwiper = function () {
       followFinger: true,
       freeMode: false,
       slideToClickedSlide: false,
+      watchOverflow: true,
+
       // mousewheel: {
       //   invert: false,
       // },
@@ -33,7 +48,7 @@ export const globalSwiper = function () {
       breakpoints: {
         // when window width is >= 320px
         320: {
-          slidesPerView: 1.2,
+          slidesPerView: 1.1,
           spaceBetween: 24,
         },
         // when window width is >= 480px
@@ -65,6 +80,15 @@ export const globalSwiper = function () {
         snapOnRelease: true,
       },
     });
+
+    if (
+      mainSwiperSlider.slides.length < slidersDesktop ||
+      (mainSwiperSlider.slides.length < 3 && window.innerWidth >= 480)
+    ) {
+      swiperComp
+        .querySelector('.main-slider_button-wrapper')
+        ?.classList.add('main-slider_button-wrapper--inactive');
+    }
   });
 
   // ELEMENTS //
@@ -83,6 +107,7 @@ export const globalSwiper = function () {
     });
   };
 
+  // EVENT HANDLERS //
   list?.addEventListener('click', (e) => {
     const clicked = e.target.closest('.card-team-2_read-more-btn');
     if (!clicked) return;
