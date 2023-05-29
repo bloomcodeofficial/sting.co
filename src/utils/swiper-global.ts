@@ -1,4 +1,4 @@
-import { Keyboard, Mousewheel, Navigation, Pagination, Scrollbar, Swiper } from 'swiper';
+import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination, Scrollbar, Swiper } from 'swiper';
 
 export const globalSwiper = function () {
   const checkListLength = function (list) {
@@ -28,8 +28,8 @@ export const globalSwiper = function () {
     swiper?.classList.add('swiper--' + i);
 
     const mainSwiperSlider = new Swiper(`.swiper.is-main-slider.swiper--` + i, {
-      modules: [Navigation, Pagination, Scrollbar, Keyboard, Mousewheel],
-      speed: 500,
+      modules: [Navigation, Pagination, Scrollbar, Keyboard, Mousewheel, Autoplay],
+      speed: 1000,
       // effect: 'fade',
       spaceBetween: 32,
       // slidesPerView: 1,
@@ -37,10 +37,7 @@ export const globalSwiper = function () {
       freeMode: false,
       slideToClickedSlide: false,
       watchOverflow: true,
-
-      // mousewheel: {
-      //   invert: false,
-      // },
+      grabCursor: true,
       keyboard: {
         enabled: true,
         onlyInViewport: true,
@@ -61,6 +58,10 @@ export const globalSwiper = function () {
           slidesPerView: slidersDesktop ? slidersDesktop : 3,
           spaceBetween: +slidersGap ? +slidersGap : 32,
         },
+      },
+      autoplay: {
+        disableOnInteraction: true,
+        delay: 4000,
       },
       navigation: {
         nextEl: swiperComp.querySelector('.swiper-next'),
