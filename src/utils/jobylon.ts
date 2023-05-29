@@ -1,13 +1,14 @@
 import { CMSCore, CMSList } from '@finsweet/attributes-cmscore';
 import type { CMSFilters } from 'src/types/CMSFilters';
 
-export const jobylon2 = () => {
+export const jobylon = () => {
   window.fsAttributes = window.fsAttributes || [];
   window.fsAttributes.push([
     'cmsload',
     async (listInstances: CMSList[]) => {
       // Get the list
       const listInstance = listInstances[0];
+      if (!listInstance) return;
 
       // Copy the template element
       const item = listInstance.items[0];
@@ -21,6 +22,7 @@ export const jobylon2 = () => {
 
       // Create items from template element
       const jobs = fetchData.map((job) => newItem(job, itemTemplateElement));
+      if (!jobs) return;
 
       // Add new items to list
       listInstance.addItems(jobs);

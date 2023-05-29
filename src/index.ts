@@ -1,6 +1,6 @@
 import { faq1 } from '$utils/faq-1';
 import { filter } from '$utils/filter';
-import { jobylon2 } from '$utils/jobylon';
+import { jobylon } from '$utils/jobylon';
 import { library } from '$utils/library';
 import { navbar } from '$utils/navbar';
 import { prestingAcc } from '$utils/presting-acc';
@@ -16,7 +16,4 @@ videoJS();
 faq1();
 filter();
 library();
-
-if (window.location.pathname === '/companies-2/startup-jobs') {
-  jobylon2();
-}
+jobylon();
