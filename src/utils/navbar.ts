@@ -1,6 +1,7 @@
 export const navbar = () => {
   //// ELEMENTS ////
   const navbar = document.querySelector('.globalnav_component');
+  const navbarContainer = document.querySelector('.globalnav_container');
   const links = document.querySelectorAll('.globalnav_link');
   const submenus = document.querySelectorAll('.globalnav_submenu');
   const menuBtn = document.querySelector('.globalnav_hamburger');
@@ -8,13 +9,16 @@ export const navbar = () => {
   const mobNavItem = document.querySelectorAll('.globalnav_mob-nav-item');
   const curtain = document.querySelector('.globalnav_curtain');
   const breadcrumbLinks = document.querySelectorAll('.globalnav-breadcrumbs_link-item');
-  const breadcrumbs = document.querySelector('.globalnav-breadcrumbs_component');
+  // const breadcrumbs = document.querySelector('.globalnav-breadcrumbs_component');
+
+  // navbarContainer.classList.add('.globalnav_component--mini');
 
   //// FUNCTIONS ////
 
   // Remove "/" from the last breadcrumb item
   const removeSlash = function () {
     const lastEl = breadcrumbLinks.item(breadcrumbLinks.length - 1);
+    if (!lastEl) return;
     const slashSymbol = lastEl.querySelector('[data-element="breadcrumb-slash"]');
 
     slashSymbol.style.display = 'none';
@@ -25,7 +29,7 @@ export const navbar = () => {
     submenus.forEach((submenu) => submenu.classList.remove('globalnav_submenu--active'));
     links.forEach((link) => link.classList.remove('globalnav_link--active'));
     curtain?.classList.remove('globalnav_curtain--active');
-    breadcrumbs?.classList.remove('globalnav-breadcrumbs_component--inactive');
+    // breadcrumbs?.classList.remove('globalnav-breadcrumbs_component--inactive');
   };
 
   // Open specific submenu
@@ -33,7 +37,7 @@ export const navbar = () => {
     link.classList.add('globalnav_link--active');
     submenu.classList.add('globalnav_submenu--active');
     curtain?.classList.add('globalnav_curtain--active');
-    breadcrumbs?.classList.add('globalnav-breadcrumbs_component--inactive');
+    // breadcrumbs?.classList.add('globalnav-breadcrumbs_component--inactive');
   };
 
   // Close all mob items to give space for clicked subnav link
@@ -58,7 +62,34 @@ export const navbar = () => {
     menuBtn.classList.remove('globalnav_hamburger--active');
   };
 
-  //// EVENT LISTENERS ////
+  // //// EVENT LISTENERS ////
+  // navbar?.addEventListener('mouseover', function (e) {
+  //   const navLink = e.target.closest('.globalnav_link');
+
+  //   // If hover is empty or the link doesn't have a submenu - return the function
+  //   if (!navLink || !navLink.dataset.submenu) return;
+
+  //   const submenu = document.querySelector(`.globalnav_submenu--${navLink.dataset.submenu}`);
+
+  //   // If submenu isn't active --> close all submenus and open this one
+  //   if (!navLink.classList.contains('globalnav_link--active')) {
+  //     closeSubmenus();
+  //     openSubmenu(navLink, submenu);
+  //     // If submenu is active --> close all submenus
+  //   } else if (navLink.classList.contains('globalnav_link--active')) {
+  //     closeSubmenus();
+  //   }
+  // });
+
+  // // Close active submenu if user hovers outside item
+  // navbar.addEventListener('mouseleave', function (e) {
+  //   const element = e.target.querySelector('.globalnav_link');
+  //   console.log(element);
+  //   if (!element) return;
+
+  //   closeSubmenus();
+  // });
+
   navbar.addEventListener('click', function (e) {
     const clicked = e.target.closest('.globalnav_link');
 

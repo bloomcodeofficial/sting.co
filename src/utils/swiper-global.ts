@@ -1,15 +1,19 @@
-import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination, Scrollbar, Swiper } from 'swiper';
+import 'swiper/css/bundle';
+
+import {
+  Autoplay,
+  Grid,
+  Keyboard,
+  Mousewheel,
+  Navigation,
+  Pagination,
+  Scrollbar,
+  Swiper,
+} from 'swiper';
 
 export const globalSwiper = function () {
-  const checkListLength = function (list) {
-    if (list.classList.contains('w-dyn-empty')) {
-      console.log('Empty list!');
-    } else return;
-  };
-
-  // Get amt of slides for desktop
+  // Elements //
   const swiperComponents = document.querySelectorAll('[element="swiper-component"]');
-  const swipers = document.querySelectorAll('.swiper.is-main-slider');
 
   swiperComponents.forEach((swiperComp, i) => {
     const swiper = swiperComp.querySelector('.swiper.is-main-slider');
@@ -18,8 +22,8 @@ export const globalSwiper = function () {
     const slidersGap = swiperList?.dataset.gappx;
     const section = swiperComp.closest('section');
 
+    // Remove swiper section if list is empty
     if (swiperList.classList.contains('w-dyn-empty')) {
-      console.log('Empty list!');
       section?.remove();
       return;
     }
@@ -89,38 +93,6 @@ export const globalSwiper = function () {
       swiperComp
         .querySelector('.main-slider_button-wrapper')
         ?.classList.add('main-slider_button-wrapper--inactive');
-    }
-  });
-
-  // ELEMENTS //
-  const list = document.querySelector('.is-startup-academy-speakers');
-  const cards = document.querySelectorAll('.card-team-2');
-
-  // FUNCTIONS //
-  const activateCard = function (card) {
-    card.classList.add('card-team-2--active');
-    card.querySelector('.card-team-2_read-more-btn').textContent = 'Close';
-  };
-
-  const deactivateCards = function () {
-    cards.forEach((card) => {
-      card.classList.remove('card-team-2--active');
-    });
-  };
-
-  // EVENT HANDLERS //
-  list?.addEventListener('click', (e) => {
-    const clicked = e.target.closest('.card-team-2_read-more-btn');
-    if (!clicked) return;
-    const card = clicked.closest('.card-team-2');
-
-    if (!card.classList.contains('.card-team-2--active')) {
-      deactivateCards();
-      activateCard(card);
-      return;
-    }
-    if (card.classList.contains('.card-team-2--active')) {
-      deactivateCards();
     }
   });
 };

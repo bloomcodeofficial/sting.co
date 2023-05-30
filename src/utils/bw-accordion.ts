@@ -40,13 +40,13 @@ export const bwAccordionAttribute = function () {
     return [...nodeList.childNodes];
   };
 
-  // EVENT HANDLERS //
-  document.addEventListener('DOMContentLoaded', () => {
-    listInstances.forEach((listInstance) => {
-      const accs = accArr(listInstance);
-      openAcc(accs[0]);
-    });
-  });
+  // // EVENT HANDLERS //
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   listInstances.forEach((listInstance) => {
+  //     const accs = accArr(listInstance);
+  //     openAcc(accs[0]);
+  //   });
+  // });
 
   listInstances.forEach((listInstance) => {
     const accs = accArr(listInstance);

@@ -2,3 +2,59 @@
   height: auto;
   opacity: 1;
 }
+
+body
+  > div.page-wrapper
+  > div.globalnav
+  > div.globalnav_component.w-nav
+  > div.globalnav_container.\.globalnav_component--mini
+  > a
+  > img {
+  max-width: 2.25rem;
+}
+
+body
+  > div.page-wrapper
+  > div.globalnav
+  > div.globalnav_component.w-nav
+  > div.globalnav_container.\.globalnav_component--mini
+  > div.globalnav_menu
+  > a.globalnav_link {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.75rem;
+}
+
+body
+  > div.page-wrapper
+  > div.globalnav
+  > div.globalnav_component.w-nav
+  > div.globalnav_container.\.globalnav_component--mini
+  > div.globalnav_menu
+  > div.globalnav_dropdown-link-wrapper
+  > div.globalnav_dropdown-toggle
+  > div.globalnav_link {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+body
+  > div.page-wrapper
+  > div.globalnav
+  > div.globalnav_component.w-nav
+  > div.globalnav_container.\.globalnav_component--mini
+  > div.globalnav_button-wrapper
+  > a.button {
+  font-size: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+.globalnav {
+  /* position: fixed; */
+  z-index: 999;
+  top: 0;
+  width: 100%;
+}
