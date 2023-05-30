@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.css"],
+  "sourcesContent": [".bw-accordion-content--active {\n  height: auto;\n  opacity: 1;\n}\n"],
+  "mappings": ";AAAA;AACE;AACA;AAAA;",
+  "names": []
+}

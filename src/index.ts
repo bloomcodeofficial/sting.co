@@ -1,4 +1,4 @@
-import { faq1 } from '$utils/faq-1';
+import { bwAccordionAttribute } from '$utils/bw-accordion';
 import { filter } from '$utils/filter';
 import { navbar } from '$utils/navbar';
 import { prestingAcc } from '$utils/presting-acc';
@@ -11,5 +11,5 @@ senja();
 prestingAcc();
 globalSwiper();
 videoJS();
-faq1();
+bwAccordionAttribute();
 filter();
