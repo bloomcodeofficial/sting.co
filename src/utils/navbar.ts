@@ -1,6 +1,7 @@
 export const navbar = () => {
   //// ELEMENTS ////
   const navbar = document.querySelector('.globalnav_component');
+  const globalnav = document.querySelector('.globalnav');
   const navbarContainer = document.querySelector('.globalnav_container');
   const links = document.querySelectorAll('.globalnav_link');
   const submenus = document.querySelectorAll('.globalnav_submenu');
@@ -11,7 +12,7 @@ export const navbar = () => {
   const breadcrumbLinks = document.querySelectorAll('.globalnav-breadcrumbs_link-item');
   // const breadcrumbs = document.querySelector('.globalnav-breadcrumbs_component');
 
-  // navbarContainer.classList.add('.globalnav_component--mini');
+  navbarContainer.classList.add('.globalnav_component--mini');
 
   //// FUNCTIONS ////
 
@@ -63,32 +64,6 @@ export const navbar = () => {
   };
 
   // //// EVENT LISTENERS ////
-  // navbar?.addEventListener('mouseover', function (e) {
-  //   const navLink = e.target.closest('.globalnav_link');
-
-  //   // If hover is empty or the link doesn't have a submenu - return the function
-  //   if (!navLink || !navLink.dataset.submenu) return;
-
-  //   const submenu = document.querySelector(`.globalnav_submenu--${navLink.dataset.submenu}`);
-
-  //   // If submenu isn't active --> close all submenus and open this one
-  //   if (!navLink.classList.contains('globalnav_link--active')) {
-  //     closeSubmenus();
-  //     openSubmenu(navLink, submenu);
-  //     // If submenu is active --> close all submenus
-  //   } else if (navLink.classList.contains('globalnav_link--active')) {
-  //     closeSubmenus();
-  //   }
-  // });
-
-  // // Close active submenu if user hovers outside item
-  // navbar.addEventListener('mouseleave', function (e) {
-  //   const element = e.target.querySelector('.globalnav_link');
-  //   console.log(element);
-  //   if (!element) return;
-
-  //   closeSubmenus();
-  // });
 
   navbar.addEventListener('click', function (e) {
     const clicked = e.target.closest('.globalnav_link');
@@ -139,4 +114,43 @@ export const navbar = () => {
   });
 
   document.addEventListener('DOMContentLoaded', removeSlash);
+
+  // Close submenus if user hover over dropdown
+  navbar?.addEventListener('mouseover', (e) => {
+    const hovered = e.target.closest('.globalnav_dropdown-link-wrapper');
+    if (!hovered) return;
+    closeSubmenus();
+  });
+
+  /*
+  // Scroll Functionalities //
+
+  // Intersection Observer API //
+  const obsCallback = function (entries) {
+    const [entry] = entries;
+    if (!entry.isIntersecting) {
+      const navHeight = globalnav?.getBoundingClientRect().height;
+      globalnav.style.height = `${navHeight}px`;
+      navbar?.classList.add('navbar_component--init');
+
+      setTimeout(() => {
+        navbar?.classList.add('navbar_component--active');
+      }, 200);
+    } else {
+      navbar?.classList.remove('navbar_component--init');
+      setTimeout(() => {
+        navbar?.classList.remove('navbar_component--active');
+      }, 200);
+    }
+  };
+
+  const obsOptions = {
+    root: null,
+    threshold: 0,
+    rootMargin: '300px',
+  };
+
+  const observer = new IntersectionObserver(obsCallback, obsOptions);
+  observer.observe(globalnav);
+  */
 };

@@ -40,25 +40,28 @@ export const bwAccordionAttribute = function () {
     return [...nodeList.childNodes];
   };
 
-  // // EVENT HANDLERS //
-  // document.addEventListener('DOMContentLoaded', () => {
-  //   listInstances.forEach((listInstance) => {
-  //     const accs = accArr(listInstance);
-  //     openAcc(accs[0]);
-  //   });
-  // });
+  // EVENT HANDLERS //
 
   listInstances.forEach((listInstance) => {
     const accs = accArr(listInstance);
+
+    // Close all accs on page load
+    closeAccs(accs);
+
+    const openFirstAcc = listInstance.getAttribute('bw-accordion-set');
+    if (openFirstAcc) openAcc(accs[0]);
+
     listInstance.addEventListener('click', (e) => {
       const trigger = e.target.closest('[bw-accordion-element="trigger"]');
       if (!trigger) return;
 
       const content = getContent(trigger);
       if (!content) return;
-      if (!content.classList.contains('bw-accordion-content--active"')) {
+      if (!content.classList.contains('bw-accordion-content--active')) {
         closeAccs(accs);
         openAcc(trigger);
+      } else if (content.classList.contains('bw-accordion-content--active')) {
+        closeAccs(accs);
       }
     });
   });

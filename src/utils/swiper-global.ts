@@ -1,15 +1,6 @@
 import 'swiper/css/bundle';
 
-import {
-  Autoplay,
-  Grid,
-  Keyboard,
-  Mousewheel,
-  Navigation,
-  Pagination,
-  Scrollbar,
-  Swiper,
-} from 'swiper';
+import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination, Scrollbar, Swiper } from 'swiper';
 
 export const globalSwiper = function () {
   // Elements //
@@ -33,7 +24,7 @@ export const globalSwiper = function () {
 
     const mainSwiperSlider = new Swiper(`.swiper.is-main-slider.swiper--` + i, {
       modules: [Navigation, Pagination, Scrollbar, Keyboard, Mousewheel, Autoplay],
-      speed: 1000,
+      speed: 500,
       // effect: 'fade',
       spaceBetween: 32,
       // slidesPerView: 1,
@@ -73,7 +64,7 @@ export const globalSwiper = function () {
       },
       pagination: {
         el: swiperComp.querySelector('.swiper-bullet-wrapper'),
-        bulletActiveClass: 'is-active',
+        bulletActiveClass: 'swiper-bullet--active',
         bulletClass: 'swiper-bullet',
         bulletElement: 'button',
         clickable: true,
