@@ -34,7 +34,9 @@ export const senja = function () {
         // if (newItems.length < 3) testimonialsList.closest('[data-element="section"]')?.remove();
 
         // Filter testimonials with less than 200 charachters of text
-        const filteredItems = newItems.filter((item) => item.text.trim().length < 300);
+        const filteredItems = newItems.filter(
+          (item) => item.text.trim().length < 300 && item.approved
+        );
 
         // Create new items and add to list
         filteredItems.forEach((item) => {
@@ -43,7 +45,7 @@ export const senja = function () {
         });
       })
       .catch((err) => {
-        console.log(`Error: ${err}`);
+        // console.log(`Error: ${err}`);
       });
 
     const createItem = function (testimonial, templateElement) {
@@ -59,7 +61,12 @@ export const senja = function () {
       if (mainText) mainText.textContent = testimonial.text;
       if (fullName) fullName.textContent = testimonial.endorser.name;
       if (title) title.textContent = testimonial.endorser.tagline;
-      if (avatar) avatar.srcset = testimonial.endorser.avatar;
+      if (avatar && testimonial.endorser.avatar) {
+        avatar.srcset = testimonial.endorser.avatar;
+      } else {
+        avatar.srcset =
+          'https://uploads-ssl.webflow.com/641d6ce948627926461a831a/6477c67d8aba67c09ead438f_avatar-placeholder.svg';
+      }
 
       return newItem;
     };
