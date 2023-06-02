@@ -31,7 +31,7 @@ export const globalSwiper = function () {
       followFinger: true,
       freeMode: false,
       slideToClickedSlide: false,
-      watchOverflow: true,
+      // watchOverflow: true,
       grabCursor: true,
       keyboard: {
         enabled: true,
@@ -40,7 +40,7 @@ export const globalSwiper = function () {
       breakpoints: {
         // when window width is >= 320px
         320: {
-          slidesPerView: 1.1,
+          slidesPerView: 1,
           spaceBetween: 24,
         },
         // when window width is >= 480px

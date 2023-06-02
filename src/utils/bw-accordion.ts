@@ -30,6 +30,7 @@ export const bwAccordionAttribute = function () {
       });
 
       const allLists = listInstances.concat(staticLists);
+      if (allLists.length === 0) return;
 
       allLists.forEach((listInstance) => {
         initAccordions(listInstance);
@@ -48,7 +49,6 @@ export const bwAccordionAttribute = function () {
     const content = item.querySelector('[bw-accordion-element="content"]');
     if (!content) return;
     content.classList.add('bw-accordion-content--active');
-    chevron.classList.add('bw-accordion-chevron--active');
   };
 
   const closeAcc = function (item) {
