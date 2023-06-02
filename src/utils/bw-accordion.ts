@@ -10,76 +10,80 @@ export const bwAccordionAttribute = function () {
   window.fsAttributes.push([
     'cmsload',
     (listInstances) => {
-      console.log('cmsload Successfully loaded!');
+      const [...bwAccs] = document.querySelectorAll('[bw-accordion-element="list"]');
+      const staticLists = [];
 
-      // The callback passes a `listInstances` array with all the `CMSList` instances on the page.
-      const [listInstance] = listInstances;
-      console.log(listInstance);
+      bwAccs.forEach((item) => {
+        const items = [];
 
-      // The `renderitems` event runs whenever the list renders items after switching pages.
-      listInstance.on('renderitems', (renderedItems) => {
-        console.log(renderedItems);
+        item.childNodes.forEach((element) => {
+          const obj = { element: element };
+          items.push(obj);
+        });
+
+        const listInstance = {
+          list: item,
+          items: items,
+        };
+
+        staticLists.push(listInstance);
       });
 
-      // // FUNCTIONS //
-      const openAcc = function (acc) {
-        const content = getContent(acc);
-        if (!content) return;
-        content.classList.add('bw-accordion-content--active');
-      };
+      const allLists = listInstances.concat(staticLists);
 
-      const openAccs = function (list) {
-        list.forEach((acc) => {
-          if (!acc) return;
-          openAcc(acc);
-        });
-      };
-
-      const getContent = function (acc) {
-        const content = acc.querySelector('[bw-accordion-element="content"]');
-        if (!content) return;
-        return content;
-      };
-
-      const closeAccs = function (list) {
-        list.forEach((acc) => {
-          if (!acc) return;
-          getContent(acc).classList.remove('bw-accordion-content--active');
-        });
-      };
-
-      const accArr = function (nodeList) {
-        return [...nodeList.childNodes];
-      };
-
-      listInstances.forEach((listInstance) => {
-        // const accs = accArr(listInstance);
-
-        // Close all accs on page load
-        closeAccs(listInstance.items);
-
-        const openFirstAcc = listInstance.getAttribute('bw-accordion-set');
-        if (openFirstAcc) openAcc(listInstance.items[0]);
-
-        listInstance.addEventListener('click', (e) => {
-          const trigger = e.target.closest('[bw-accordion-element="trigger"]');
-          if (!trigger) return;
-
-          const content = getContent(trigger);
-          if (!content) return;
-          if (!content.classList.contains('bw-accordion-content--active')) {
-            closeAccs(listInstance);
-            openAcc(trigger);
-          } else if (content.classList.contains('bw-accordion-content--active')) {
-            closeAccs(listInstance);
-          }
-        });
+      allLists.forEach((listInstance) => {
+        initAccordions(listInstance);
       });
+
+      // listInstance.on('renderitems', (renderedItems) => {
+      //   addAccordions(listInstance.items);
+      // });
     },
   ]);
 
-  // // ELEMENTS //
-  const listInstances = [...document.querySelectorAll('[bw-accordion-element="list"]')];
+  // // FUNCTIONS //
+  const openAcc = function (item) {
+    // Get content element and add active class to show accordion content
+    const chevron = item.querySelector('[bw-accordion-element="chevron"]');
+    const content = item.querySelector('[bw-accordion-element="content"]');
+    if (!content) return;
+    content.classList.add('bw-accordion-content--active');
+    chevron.classList.add('bw-accordion-chevron--active');
+  };
 
-  // EVENT HANDLERS //
+  const closeAcc = function (item) {
+    // Get content element and add active class to show accordion content
+    const content = item.querySelector('[bw-accordion-element="content"]');
+    if (!content) return;
+    content.classList.remove('bw-accordion-content--active');
+  };
+
+  const closeAccs = function (items) {
+    items.forEach((item) => {
+      closeAcc(item.element);
+    });
+  };
+
+  const initAccordions = function (listInstance) {
+    const { items } = listInstance;
+    const { list } = listInstance;
+
+    // Close all accordions on page load
+    closeAccs(listInstance.items);
+
+    // Open first accordion
+    if (list.getAttribute('bw-accordion-set')) openAcc(items[0].element);
+
+    // Open accordion on click
+    list.addEventListener('click', function (e) {
+      const item = e.target.closest('[bw-accordion-element="trigger"]');
+      if (!item) return;
+
+      // Close any other open accordion
+      closeAccs(listInstance.items);
+
+      // Open clicked accordion
+      openAcc(item);
+    });
+  };
 };

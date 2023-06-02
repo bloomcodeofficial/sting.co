@@ -15,6 +15,7 @@ export const filter = function () {
   };
 
   // EVENT HANDLERS //
+
   filterInstances.forEach((filterInstance) => {
     // Attaches click event on each filter component
     filterInstance.addEventListener('click', (e) => {
