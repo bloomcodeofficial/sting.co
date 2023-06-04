@@ -9,6 +9,9 @@ export const navbar = () => {
   const curtain = document.querySelector('.globalnav_curtain');
   const breadcrumbLinks = document.querySelectorAll('.globalnav-breadcrumbs_link-item');
   const breadcrumbs = document.querySelector('.globalnav-breadcrumbs_component');
+  const mobCurtain = document.querySelector('.globalnav_mob-curtain');
+
+  const scrollEnabled = true;
 
   //// FUNCTIONS ////
 
@@ -99,6 +102,11 @@ export const navbar = () => {
   });
 
   mobNav?.addEventListener('click', function (e) {
+    if (e.target === mobCurtain) {
+      closeMobItems();
+      closeMobmenu();
+    }
+
     const clicked = e.target.closest('.globalnav_mob-expand');
     if (!clicked || !clicked.dataset.subnav) return;
     const item = document.querySelector(`[subnav="${clicked.dataset.subnav}"]`);
