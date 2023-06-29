@@ -1,4 +1,4 @@
-export const navbar = () => {
+/*
   //// ELEMENTS ////
   const navbar = document.querySelector('.globalnav_component');
   const links = document.querySelectorAll('.globalnav_link');
@@ -157,4 +157,3 @@ export const navbar = () => {
   const observer = new IntersectionObserver(obsCallback, obsOptions);
   observer.observe(globalnav);
   */
-};

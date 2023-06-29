@@ -1,1 +1,34 @@
-"use strict";(()=>{var a=function(){window.fsAttributes=window.fsAttributes||[],window.fsAttributes.push(["cmsload",r=>{r.forEach(t=>{if(t.items.length===0){t.list.closest("section").remove();return}t.items.sort((o,n)=>{let i=o.element,d=n.element,e=new Date(i.dataset.sortdate),s=new Date(d.dataset.sortdate);return e<s?1:e>s?-1:0}),t.renderItems()})}])};})();
+"use strict";
+(() => {
+  // bin/live-reload.js
+  new EventSource(`${"http://localhost:3000"}/esbuild`).addEventListener("change", () => location.reload());
+
+  // src/utils/library.ts
+  var library = function() {
+    window.fsAttributes = window.fsAttributes || [];
+    window.fsAttributes.push([
+      "cmsload",
+      (listInstances) => {
+        listInstances.forEach((instance) => {
+          if (instance.items.length === 0) {
+            instance.list.closest("section").remove();
+            return;
+          }
+          instance.items.sort((a, b) => {
+            const elA = a.element;
+            const elB = b.element;
+            const dateA = new Date(elA.dataset.sortdate);
+            const dateB = new Date(elB.dataset.sortdate);
+            if (dateA < dateB)
+              return 1;
+            if (dateA > dateB)
+              return -1;
+            return 0;
+          });
+          instance.renderItems();
+        });
+      }
+    ]);
+  };
+})();
+//# sourceMappingURL=library.js.map

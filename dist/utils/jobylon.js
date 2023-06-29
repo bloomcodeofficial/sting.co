@@ -1,1 +1,163 @@
-"use strict";(()=>{window.fsAttributes=window.fsAttributes||[];window.fsAttributes.push(["cmsload",async e=>{let n=e[0];if(!n)return;let o=n.items[0].element,c=await F();n.clearItems();let f=c.map(d=>g(d,o));f&&(n.addItems(f),window.fsAttributes.push(["cmsfilter",async d=>{var y,h;let[l]=d,r=(y=l.form.querySelector('[data-element="experience-filter"]'))==null?void 0:y.parentElement,s=(h=l.form.querySelector('[data-element="job-function-filter"]'))==null?void 0:h.parentElement,a=l.form.querySelector('[data-element="location-filter"]').parentElement,w=r==null?void 0:r.parentElement,m=s==null?void 0:s.parentElement,u=a==null?void 0:a.parentElement;r==null||r.remove(),s==null||s.remove(),a==null||a.remove();let x=I(c,"experience"),C=I(c,"function"),S=b(c);for(let p of x){let i=q(p,r);i&&(w==null||w.append(i))}for(let p of C){let i=q(p,s);i&&(m==null||m.append(i))}for(let p of S){let i=q(p,a);i&&(u==null||u.append(i))}l.storeFiltersData()}]))}]);var F=async()=>{try{return await(await fetch("https://feed.jobylon.com/feeds/a23d1a2b-647c-4497-b36b-1555efaba88f/?format=json")).json()}catch{return[]}},g=(e,n)=>{let t=n.cloneNode(!0),o=t.querySelector('[data-element="logo"]'),c=t.querySelector('[data-element="title"]'),f=t.querySelector('[data-element="company"]'),d=t.querySelector('[data-element="location"]'),l=t.querySelector('[data-element="level"]'),r=t.querySelector('[data-element="type"]'),s=t.querySelector('[data-element="job-function"]'),a=t.querySelector('[data-element="link"]');return(()=>{let m=v(e),u=d.parentElement,x=u.parentElement;u.remove(),m.forEach(C=>{let S=u.cloneNode(!0),y=S.querySelector('[data-element="location"]');y&&(y.textContent=C),x.append(S)})})(),o&&(o.src=e.company.logo),c&&(c.textContent=e.title),f&&(f.textContent=e.company.name),l&&(l.textContent=e.experience),r&&(r.textContent=e.employment_type),s&&(s.textContent=e.function),a&&(a.href=e.urls.ad),t},I=function(e,n){let t=new Set;for(let o of e)t.add(o[n]);return[...t]},b=function(e){let n=new Set;return e.forEach(t=>{t.locations.forEach(o=>{if(o.location.city){n.add(o.location.city);return}if(!o.location.city&&o.location.text){n.add(o.location.text);return}})}),[...n]},v=function(e){let n=new Set;return e.locations.forEach(t=>{t.location.city?n.add(t.location.city):t.location.text&&n.add(t.location.text)}),[...n]},q=(e,n)=>{let t=n.cloneNode(!0),o=t.querySelector("span"),c=t.querySelector("input");if(!(!o||!c))return o.textContent=e,c.value=e,t};})();
+"use strict";
+(() => {
+  // bin/live-reload.js
+  new EventSource(`${"http://localhost:3000"}/esbuild`).addEventListener("change", () => location.reload());
+
+  // src/utils/jobylon.ts
+  window.fsAttributes = window.fsAttributes || [];
+  window.fsAttributes.push([
+    "cmsload",
+    async (listInstances) => {
+      const listInstance = listInstances[0];
+      if (!listInstance)
+        return;
+      const item = listInstance.items[0];
+      const itemTemplateElement = item.element;
+      const fetchData = await fetchJobs();
+      listInstance.clearItems();
+      const jobs = fetchData.map((job) => newItem(job, itemTemplateElement));
+      if (!jobs)
+        return;
+      listInstance.addItems(jobs);
+      window.fsAttributes.push([
+        "cmsfilter",
+        async (filterInstances) => {
+          const [filterInstance] = filterInstances;
+          const filterTemplateElement1 = filterInstance.form.querySelector(
+            '[data-element="experience-filter"]'
+          )?.parentElement;
+          const filterTemplateElement2 = filterInstance.form.querySelector(
+            '[data-element="job-function-filter"]'
+          )?.parentElement;
+          const filterTemplateElement3 = filterInstance.form.querySelector(
+            '[data-element="location-filter"]'
+          ).parentElement;
+          const filter1WrapperElement = filterTemplateElement1?.parentElement;
+          const filter2WrapperElement = filterTemplateElement2?.parentElement;
+          const filter3WrapperElement = filterTemplateElement3?.parentElement;
+          filterTemplateElement1?.remove();
+          filterTemplateElement2?.remove();
+          filterTemplateElement3?.remove();
+          const newItems1 = collectCategories(fetchData, "experience");
+          const newItems2 = collectCategories(fetchData, "function");
+          const newItems3 = collectLocations(fetchData);
+          for (const category of newItems1) {
+            const newFilter = createFiler(category, filterTemplateElement1);
+            if (!newFilter)
+              continue;
+            filter1WrapperElement?.append(newFilter);
+          }
+          for (const category of newItems2) {
+            const newFilter = createFiler(category, filterTemplateElement2);
+            if (!newFilter)
+              continue;
+            filter2WrapperElement?.append(newFilter);
+          }
+          for (const category of newItems3) {
+            const newFilter = createFiler(category, filterTemplateElement3);
+            if (!newFilter)
+              continue;
+            filter3WrapperElement?.append(newFilter);
+          }
+          filterInstance.storeFiltersData();
+        }
+      ]);
+    }
+  ]);
+  var fetchJobs = async () => {
+    try {
+      const response = await fetch(
+        "https://feed.jobylon.com/feeds/a23d1a2b-647c-4497-b36b-1555efaba88f/?format=json"
+      );
+      const jobs = await response.json();
+      return jobs;
+    } catch (error) {
+      return [];
+    }
+  };
+  var newItem = (job, templateElement) => {
+    const newItem2 = templateElement.cloneNode(true);
+    const logo = newItem2.querySelector('[data-element="logo"]');
+    const title = newItem2.querySelector('[data-element="title"]');
+    const company = newItem2.querySelector('[data-element="company"]');
+    const location2 = newItem2.querySelector('[data-element="location"]');
+    const experience = newItem2.querySelector('[data-element="level"]');
+    const jobType = newItem2.querySelector('[data-element="type"]');
+    const jobFunction = newItem2.querySelector('[data-element="job-function"]');
+    const link = newItem2.querySelector('[data-element="link"]');
+    const addLocations = () => {
+      const jobLocations = collectJobLocations(job);
+      const templ = location2.parentElement;
+      const list = templ.parentElement;
+      templ.remove();
+      jobLocations.forEach((location3) => {
+        const newLocation = templ.cloneNode(true);
+        const locationTxt = newLocation.querySelector('[data-element="location"]');
+        if (locationTxt)
+          locationTxt.textContent = location3;
+        list.append(newLocation);
+      });
+    };
+    addLocations();
+    if (logo)
+      logo.src = job.company.logo;
+    if (title)
+      title.textContent = job.title;
+    if (company)
+      company.textContent = job.company.name;
+    if (experience)
+      experience.textContent = job.experience;
+    if (jobType)
+      jobType.textContent = job.employment_type;
+    if (jobFunction)
+      jobFunction.textContent = job.function;
+    if (link)
+      link.href = job.urls.ad;
+    return newItem2;
+  };
+  var collectCategories = function(jobs, category) {
+    const categoryItems = /* @__PURE__ */ new Set();
+    for (const job of jobs) {
+      categoryItems.add(job[category]);
+    }
+    return [...categoryItems];
+  };
+  var collectLocations = function(jobs) {
+    const locationItems = /* @__PURE__ */ new Set();
+    jobs.forEach((job) => {
+      job.locations.forEach((jobLocations) => {
+        if (jobLocations.location.city) {
+          locationItems.add(jobLocations.location.city);
+          return;
+        }
+        if (!jobLocations.location.city && jobLocations.location.text) {
+          locationItems.add(jobLocations.location.text);
+          return;
+        }
+      });
+    });
+    return [...locationItems];
+  };
+  var collectJobLocations = function(job) {
+    const string = /* @__PURE__ */ new Set();
+    job.locations.forEach((jobLocations) => {
+      if (jobLocations.location.city) {
+        string.add(jobLocations.location.city);
+      } else if (jobLocations.location.text) {
+        string.add(jobLocations.location.text);
+      }
+    });
+    return [...string];
+  };
+  var createFiler = (category, templateElement) => {
+    const newFilter = templateElement.cloneNode(true);
+    const label = newFilter.querySelector("span");
+    const input = newFilter.querySelector("input");
+    if (!label || !input)
+      return;
+    label.textContent = category;
+    input.value = category;
+    return newFilter;
+  };
+})();
+//# sourceMappingURL=jobylon.js.map

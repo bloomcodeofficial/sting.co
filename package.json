@@ -56,6 +56,7 @@
     "@finsweet/attributes-cmscore": "^1.12.1",
     "@finsweet/attributes-cmsfilter": "^1.16.2",
     "@finsweet/ts-utils": "^0.39.1",
+    "chart.js": "^4.3.0",
     "swiper": "^9.2.4"
   }
 }

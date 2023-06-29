@@ -1,20 +1,20 @@
-import { bwAccordionAttribute } from '$utils/bw-accordion';
+// import { bwAccordionAttribute } from '$utils/bw-accordion';
 import { filter } from '$utils/filter';
 import { library } from '$utils/library';
-import { navbar } from '$utils/navbar';
 import { openCoaching } from '$utils/open-coaching';
 import { senja } from '$utils/senja';
 import { globalSwiper } from '$utils/swiper-global';
 import { videoJS } from '$utils/videojs';
+import { report22 } from '$utils/report22';
 
-navbar();
 senja();
 globalSwiper();
 videoJS();
-bwAccordionAttribute();
+// bwAccordionAttribute();
 filter();
 openCoaching();
 library();
+report22();
 
 /*
 const versionID = 'ed74908c1c21eccd0f7357a5817f815b5a961a56';
