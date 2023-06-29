@@ -22,11 +22,10 @@ export const report22 = async function () {
     const chartCompanies = document.querySelector<HTMLCanvasElement>(
       '[data-element="number-of-companies"]'
     );
-    const chartValuation = document.querySelector<HTMLCanvasElement>('[data-element="valuation"]');
-
     const dataNumberOfCompanies = await fetchData('number-of-companies');
 
-    if (!chartCompanies) return;
+    const chartValuation = document.querySelector<HTMLCanvasElement>('[data-element="valuation"]');
+    const dataValuation = await fetchData('valuation');
 
     new Chart(chartCompanies, {
       type: 'bar',
@@ -64,6 +63,23 @@ export const report22 = async function () {
           //   data: dataNumberOfCompanies.map((row) => row.mergers),
           //   backgroundColor: 'black',
           // },
+        ],
+      },
+    });
+
+    new Chart(chartValuation, {
+      type: 'line',
+      options: {
+        backgroundColor: '#ec1877',
+      },
+      data: {
+        labels: dataValuation.map((row) => row.year).sort((a, b) => a - b),
+        datasets: [
+          {
+            label: 'Valuation of Sting companies (bn EUR)',
+            data: dataValuation.map((row) => row.valuation / 1000),
+            backgroundColor: '#ec1877',
+          },
         ],
       },
     });
