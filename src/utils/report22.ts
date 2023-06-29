@@ -1,9 +1,9 @@
 import { Chart } from 'chart.js/auto';
 import { Autoplay } from 'swiper';
 
-export const report22 = function () {
+export const report22 = async function () {
   window.Webflow ||= [];
-  window.Webflow.push(() => {
+  window.Webflow.push(async () => {
     // Global settings
     Chart.defaults.font.family = 'Poppins';
     Chart.defaults.font.size = 16;
@@ -24,7 +24,7 @@ export const report22 = function () {
     );
     const chartValuation = document.querySelector<HTMLCanvasElement>('[data-element="valuation"]');
 
-    const data = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+    const dataNumberOfCompanies = await fetchData('number-of-companies');
 
     if (!chartCompanies) return;
 
@@ -42,25 +42,46 @@ export const report22 = function () {
       },
 
       data: {
-        labels: yearLabels(),
+        labels: dataNumberOfCompanies.map((row) => row.year).sort((a, b) => a - b),
         datasets: [
           {
             label: 'Active companies',
-            data: data,
+            data: dataNumberOfCompanies.map((row) => row.activeCompanies),
             backgroundColor: '#ec1877',
           },
           {
-            label: 'Living dead / Changed idea',
-            data: data,
+            label: 'Living dead / Changed ideas',
+            data: dataNumberOfCompanies.map((row) => row.livingDead),
             backgroundColor: 'grey',
           },
           {
             label: 'Discontinued',
-            data: data,
+            data: dataNumberOfCompanies.map((row) => row.discontinued),
             backgroundColor: 'black',
           },
+          // {
+          //   label: 'Mergers / Acquisitions',
+          //   data: dataNumberOfCompanies.map((row) => row.mergers),
+          //   backgroundColor: 'black',
+          // },
         ],
       },
     });
   });
+
+  async function fetchData(chart) {
+    const res = await fetch('/annual-reports/data');
+    const html = await res.text();
+
+    const parser = new DOMParser();
+    const page = parser.parseFromString(html, 'text/html');
+
+    const list = Array.from(page.querySelector(`[data-chart="${chart}"]`)?.childNodes);
+    const data = list.map((item) => {
+      const script = item.querySelector('script');
+      const data = JSON.parse(script.textContent);
+      return data;
+    });
+    return data;
+  }
 };
