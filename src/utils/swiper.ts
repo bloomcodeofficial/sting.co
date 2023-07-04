@@ -1,10 +1,12 @@
 import 'swiper/css/bundle';
 
-import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination, Scrollbar, Swiper } from 'swiper';
+import { Autoplay, Keyboard, Mousewheel, Navigation, Pagination, Swiper } from 'swiper';
 
 export const globalSwiper = function () {
   // Elements //
   const swiperComponents = document.querySelectorAll('[element="swiper-component"]');
+  if (swiperComponents.length === 0) return;
+  // console.log('Swiper active!');
 
   swiperComponents.forEach((swiperComp, i) => {
     const swiper = swiperComp.querySelector('.swiper.is-main-slider');
@@ -13,17 +15,11 @@ export const globalSwiper = function () {
     const slidersGap = swiperList?.dataset.gappx;
     const section = swiperComp.closest('section');
 
-    // Remove swiper section if list is empty
-    if (swiperList.classList.contains('w-dyn-empty')) {
-      section?.remove();
-      return;
-    }
-
     section.style.overflow = 'hidden';
     swiper?.classList.add('swiper--' + i);
 
     const mainSwiperSlider = new Swiper(`.swiper.is-main-slider.swiper--` + i, {
-      modules: [Navigation, Pagination, Scrollbar, Keyboard, Mousewheel, Autoplay],
+      modules: [Navigation, Pagination, Keyboard, Mousewheel, Autoplay],
       speed: 500,
       // effect: 'fade',
       spaceBetween: 32,
@@ -56,7 +52,7 @@ export const globalSwiper = function () {
       },
       autoplay: {
         disableOnInteraction: true,
-        delay: 4000,
+        delay: 7000,
       },
       navigation: {
         nextEl: swiperComp.querySelector('.swiper-next'),
@@ -69,21 +65,6 @@ export const globalSwiper = function () {
         bulletElement: 'button',
         clickable: true,
       },
-      scrollbar: {
-        el: swiperComp.querySelector('.swiper-drag-wrapper'),
-        draggable: true,
-        dragClass: 'swiper-drag',
-        snapOnRelease: true,
-      },
     });
-
-    if (
-      mainSwiperSlider.slides.length < slidersDesktop ||
-      (mainSwiperSlider.slides.length < 3 && window.innerWidth >= 480)
-    ) {
-      swiperComp
-        .querySelector('.main-slider_button-wrapper')
-        ?.classList.add('main-slider_button-wrapper--inactive');
-    }
   });
 };

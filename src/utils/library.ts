@@ -23,14 +23,6 @@ export const library = function () {
 
         instance.renderItems();
       });
-
-      // listInstances.forEach((list) => {
-
-      // });
-
-      // listInstance.on('renderitems', (renderedItems) => {
-      //   console.log(renderedItems);
-      // });
     },
   ]);
 };

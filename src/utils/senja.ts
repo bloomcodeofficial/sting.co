@@ -5,6 +5,7 @@ export const senja = function () {
     // Get testimonials from Senja.io
     const testimonialsList = document.querySelector('.swiper-wrapper.is-main-slider');
     if (!testimonialsList) return;
+    // console.log('Senja testimonials active!')
     const { tags } = testimonialsList.dataset;
 
     // Get template element
@@ -32,6 +33,13 @@ export const senja = function () {
 
         // // Remove section if no testimonials exist
         // if (newItems.length < 3) testimonialsList.closest('[data-element="section"]')?.remove();
+
+        if (newItems.length >= 3) {
+          const swiperComp = testimonialsList.closest('[element="swiper-component"]');
+          console.log(swiperComp);
+
+          // swiperComp?.classList.add('main-slider_button-wrapper--inactive');
+        }
 
         // Filter testimonials with less than 200 charachters of text
         const filteredItems = newItems.filter(

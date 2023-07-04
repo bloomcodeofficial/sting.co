@@ -1,11 +1,9 @@
 import { Chart } from 'chart.js/auto';
-import { DatasetController } from 'chart.js/dist';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Autoplay } from 'swiper';
 
 Chart.register(ChartDataLabels);
 
-export const report22 = async function () {
+export const annualReports = async function () {
   window.Webflow ||= [];
   window.Webflow.push(async () => {
     // Global settings
@@ -294,15 +292,13 @@ export const report22 = async function () {
             font: {
               size: 24,
             },
-            align: 'top',
-            padding: {
-              bottom: 64,
-            },
+            align: 'right',
+
             formatter(value, context) {
               if (context.dataset.label === 'International revenue') {
-                return `${Math.round((value / data.pop().revenue) * 100)}% \n\n\n`;
+                return `${Math.round((value / data.pop().revenue) * 100)}%`;
               }
-              return `${value} m EUR`;
+              return `${value}`;
             },
           },
         },
@@ -356,9 +352,9 @@ export const report22 = async function () {
       },
       data: {
         // labels: data.map((row) => row.year).sort((a, b) => a - b),
+        labels: ['Females', 'Males'],
         datasets: [
           {
-            label: 'Females',
             data: [
               data.map((row) => row.employeesFemale).pop(),
               data.map((row) => row.employeesMale).pop(),

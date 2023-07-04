@@ -8,6 +8,7 @@ window.fsAttributes.push([
     // Get the list
     const listInstance = listInstances[0];
     if (!listInstance) return;
+    // console.log('Jobylon active!');
 
     // Copy the template element
     const item = listInstance.items[0];
